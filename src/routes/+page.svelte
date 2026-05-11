@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { LOG_FEED } from '$lib/data';
   import Sidebar from '$lib/components/Sidebar.svelte';
   import Hero from '$lib/components/Hero.svelte';
   import ProjectsList from '$lib/components/ProjectsList.svelte';
@@ -42,13 +41,15 @@
   let activeProj = $state('eval-agent');
   let openProj = $state<string | null>(null);
   let paletteOpen = $state(false);
-  let logCount = $state(0);
   let now = $state(new Date());
   let activeTab = $state<'home' | 'work' | 'notes' | 'contact'>('home');
   let contactOpen = $state(false);
   let activeTech  = $state<string | null>(null);
+  let mobileSidebarOpen = $state(false);
+  let mobileRailOpen    = $state(false);
 
   function gotoTab(tab: 'home' | 'work' | 'notes' | 'contact') {
+    mobileSidebarOpen = false;
     if (tab === 'contact') {
       contactOpen = true;
       return;
@@ -59,19 +60,7 @@
 
   onMount(() => {
     const clockId = setInterval(() => { now = new Date(); }, 1000);
-
-    let streamId: ReturnType<typeof setTimeout>;
-    function streamLog() {
-      if (logCount >= LOG_FEED.length) return;
-      logCount++;
-      streamId = setTimeout(streamLog, 230 + Math.random() * 200);
-    }
-    streamId = setTimeout(streamLog, 400);
-
-    return () => {
-      clearInterval(clockId);
-      clearTimeout(streamId);
-    };
+    return () => clearInterval(clockId);
   });
 
   function onGlobalKey(e: KeyboardEvent) {
@@ -85,6 +74,8 @@
       contactOpen = false;
       activeTech  = null;
       accentPickerOpen = false;
+      mobileSidebarOpen = false;
+      mobileRailOpen    = false;
     }
   }
 
@@ -155,18 +146,32 @@
         {/if}
       </div>
       <span class="cd-tb-status"><Pulse /> build · pass</span>
+      <button class="cd-hamburger" onclick={() => mobileSidebarOpen = !mobileSidebarOpen} aria-label="toggle sidebar">☰</button>
+      <button class="cd-hamburger cd-rail-toggle" onclick={() => mobileRailOpen = !mobileRailOpen} aria-label="toggle activity rail">⌥</button>
     </div>
   </header>
+
+  <!-- Mobile sidebar backdrop -->
+  {#if mobileSidebarOpen}
+    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+    <div class="cd-sidebar-backdrop" onclick={() => mobileSidebarOpen = false}></div>
+  {/if}
+  <!-- Mobile rail backdrop -->
+  {#if mobileRailOpen}
+    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+    <div class="cd-sidebar-backdrop" onclick={() => mobileRailOpen = false}></div>
+  {/if}
 
   <!-- Main grid -->
   <div class="cd-grid">
     <Sidebar
       {activeProj}
+      mobileOpen={mobileSidebarOpen}
       onSelectProj={(id) => activeProj = id}
       onOpenPalette={() => paletteOpen = true}
-      onOpenProj={(id) => openProj = id}
-      onOpenContact={() => contactOpen = true}
-      onScrollTo={(section) => document.getElementById(`section-${section}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+      onOpenProj={(id) => { openProj = id; mobileSidebarOpen = false; }}
+      onOpenContact={() => { contactOpen = true; mobileSidebarOpen = false; }}
+      onScrollTo={(section) => { document.getElementById(`section-${section}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); mobileSidebarOpen = false; }}
     />
 
     <main class="cd-main">
@@ -185,7 +190,7 @@
     </main>
 
     {#if railSide !== 'hidden'}
-      <Rail {logCount} {now} onSelectTech={(t) => activeTech = t} />
+      <Rail {now} mobileOpen={mobileRailOpen} onSelectTech={(t) => { activeTech = t; mobileRailOpen = false; }} />
     {/if}
   </div>
 
@@ -221,6 +226,15 @@
       <span class="cd-sb-pill cd-sb-pill-ok">online</span>
     </div>
   </footer>
+
+  <!-- Mobile bottom nav -->
+  <nav class="cd-mobile-nav">
+    <button class:is-active={activeTab === 'home'}  onclick={() => gotoTab('home')}>home.tsx</button>
+    <button class:is-active={activeTab === 'work'}  onclick={() => gotoTab('work')}>work</button>
+    <button class:is-active={activeTab === 'notes'} onclick={() => gotoTab('notes')}>notes/</button>
+    <button onclick={() => gotoTab('contact')}>contact</button>
+    <button class:is-active={mobileSidebarOpen} onclick={() => mobileSidebarOpen = !mobileSidebarOpen}>files</button>
+  </nav>
 
   <!-- Overlays -->
   <ProjectDetail projId={openProj} onClose={() => openProj = null} />

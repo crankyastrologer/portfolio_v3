@@ -1,16 +1,17 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
-  import { LOG_FEED, EXPERIENCE } from '$lib/data';
+  import { LOG_FEED, EXPERIENCE, type LogEntry } from '$lib/data';
   import Pulse from './Pulse.svelte';
 
   let {
-    logCount,
     now,
+    mobileOpen = false,
     onSelectTech,
   }: {
-    logCount: number;
     now: Date;
+    mobileOpen?: boolean;
     onSelectTech: (tech: string) => void;
   } = $props();
 
@@ -18,26 +19,110 @@
     now.toLocaleTimeString('en-GB', { hour12: false, timeZone: 'Asia/Kolkata' }).slice(0, 8)
   );
 
+  // ── GitHub events log ──────────────────────────────────────────────
+  let entries     = $state<LogEntry[]>([]);
+  let visible     = $state(0);
+  let fetchState  = $state<'loading' | 'live' | 'fallback'>('loading');
+
+  function relTime(iso: string): string {
+    const diff  = Date.now() - new Date(iso).getTime();
+    const mins  = Math.floor(diff / 60_000);
+    const hours = Math.floor(diff / 3_600_000);
+    const days  = Math.floor(diff / 86_400_000);
+    if (mins  <  60) return `${mins}m ago`;
+    if (hours <  24) return `${hours}h ago`;
+    if (days  <   7) return `${days}d ago`;
+    return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+  }
+
+  function fmtEvent(ev: any): LogEntry | null {
+    const repo = ev.repo.name.split('/')[1];
+    const t    = relTime(ev.created_at);
+    switch (ev.type) {
+      case 'PushEvent': {
+        const msg = ev.payload.commits?.[0]?.message?.split('\n')[0].slice(0, 52) ?? 'pushed code';
+        return { t, lvl: ' OK ', msg: `pushed <span class="hi">${msg}</span> → ${repo}` };
+      }
+      case 'CreateEvent':
+        return { t, lvl: ' INF', msg: `created ${ev.payload.ref_type} <span class="hi">${ev.payload.ref ?? repo}</span>` };
+      case 'PullRequestEvent': {
+        const pr = ev.payload.pull_request;
+        return { t, lvl: ' INF', msg: `${ev.payload.action} PR <span class="hi">#${pr.number}</span> · ${pr.title.slice(0, 38)}` };
+      }
+      case 'IssuesEvent':
+        return { t, lvl: ' WRN', msg: `${ev.payload.action} issue <span class="hi">#${ev.payload.issue.number}</span> in ${repo}` };
+      case 'IssueCommentEvent':
+        return { t, lvl: ' INF', msg: `commented on <span class="hi">#${ev.payload.issue.number}</span> · ${repo}` };
+      case 'WatchEvent':
+        return { t, lvl: ' INF', msg: `starred <span class="hi">${repo}</span>` };
+      case 'ForkEvent':
+        return { t, lvl: ' INF', msg: `forked <span class="hi">${repo}</span>` };
+      case 'DeleteEvent':
+        return { t, lvl: ' WRN', msg: `deleted ${ev.payload.ref_type} in <span class="hi">${repo}</span>` };
+      case 'ReleaseEvent':
+        return { t, lvl: ' OK ', msg: `released <span class="hi">${ev.payload.release.tag_name}</span> · ${repo}` };
+      default:
+        return null;
+    }
+  }
+
+  function stream(list: LogEntry[]) {
+    let i = 0;
+    function next() {
+      if (i >= list.length) return;
+      visible = i + 1;
+      i++;
+      setTimeout(next, 110 + Math.random() * 140);
+    }
+    setTimeout(next, 300);
+  }
+
+  onMount(() => {
+    fetch('https://api.github.com/users/crankyastrologer/events/public')
+      .then(r => {
+        if (!r.ok) throw new Error(r.statusText);
+        return r.json();
+      })
+      .then((evs: any[]) => {
+        const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 14);
+        entries     = lines.length ? lines : LOG_FEED;
+        fetchState  = lines.length ? 'live' : 'fallback';
+        stream(entries);
+      })
+      .catch(() => {
+        entries    = LOG_FEED;
+        fetchState = 'fallback';
+        stream(entries);
+      });
+  });
+
+  // ── Experience hover ───────────────────────────────────────────────
   let hoveredExp = $state<string | null>(null);
 
   const STACK = [
-    { label: 'ml',   color: 'var(--blue)',        items: ['pytorch', 'cuda', 'langchain', 'qdrant', 'sklearn'] },
-    { label: 'web',  color: 'var(--cd-accent)',   items: ['svelte', 'next', 'hono', 'fastapi', 'flask'] },
-    { label: 'db',   color: 'var(--amber)',        items: ['mongo', 'redis', 'postgres'] },
-    { label: 'lang', color: 'var(--red)',          items: ['python', 'c/c++', 'typescript', 'java'] },
-    { label: 'cert', color: 'var(--fg-3)',         items: ['aws', 'nptel c++', 'nptel bizan'] },
+    { label: 'ml',   color: 'var(--blue)',      items: ['pytorch', 'cuda', 'langchain', 'qdrant', 'sklearn'] },
+    { label: 'web',  color: 'var(--cd-accent)', items: ['svelte', 'next', 'hono', 'fastapi', 'flask'] },
+    { label: 'db',   color: 'var(--amber)',      items: ['mongo', 'redis', 'postgres'] },
+    { label: 'lang', color: 'var(--red)',        items: ['python', 'c/c++', 'typescript', 'java'] },
+    { label: 'cert', color: 'var(--fg-3)',       items: ['aws', 'nptel c++', 'nptel bizan'] },
   ];
 </script>
 
-<aside class="cd-rail">
+<aside class="cd-rail" class:is-open={mobileOpen}>
   <!-- Live log feed -->
   <div class="cd-panel cd-panel-rail">
     <div class="cd-panel-head">
       <span class="cd-panel-title">~/now.log</span>
-      <Pulse />
+      {#if fetchState === 'loading'}
+        <span class="cd-dim" style="font-size:10px">fetching…</span>
+      {:else if fetchState === 'live'}
+        <Pulse />
+      {:else}
+        <span class="cd-dim" style="font-size:10px">cached</span>
+      {/if}
     </div>
     <div class="cd-log">
-      {#each LOG_FEED.slice(0, logCount) as l}
+      {#each entries.slice(0, visible) as l}
         <div class="cd-log-line">
           <span class="cd-dim">{l.t}</span>
           <span class="cd-lvl cd-lvl-{l.lvl.trim().toLowerCase()}">{l.lvl}</span>
@@ -61,7 +146,7 @@
     <div class="cd-timeline">
       {#each EXPERIENCE as e, i}
         {@const isCurrent = e.when.includes('now')}
-        {@const expanded = hoveredExp === e.co}
+        {@const expanded  = hoveredExp === e.co}
         <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div
           class="cd-tl-entry"

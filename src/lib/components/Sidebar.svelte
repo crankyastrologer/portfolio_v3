@@ -3,6 +3,7 @@
 
   let {
     activeProj,
+    mobileOpen = false,
     onSelectProj,
     onOpenPalette,
     onOpenProj,
@@ -10,6 +11,7 @@
     onScrollTo,
   }: {
     activeProj: string | null;
+    mobileOpen?: boolean;
     onSelectProj: (id: string) => void;
     onOpenPalette: () => void;
     onOpenProj: (id: string) => void;
@@ -18,7 +20,7 @@
   } = $props();
 </script>
 
-<aside class="cd-sidebar">
+<aside class="cd-sidebar" class:is-open={mobileOpen}>
   <div class="cd-side-head">
     <span>EXPLORER</span>
     <button class="cd-side-kbd" onclick={onOpenPalette} title="Command palette">⌘K</button>
@@ -57,10 +59,18 @@
   <div class="cd-side-head cd-side-head-2">CURRENTLY</div>
   <div class="cd-currently">
     {#each CURRENTLY as c}
-      <div class="cd-curr-row">
-        <span class="cd-curr-v">{c.v}</span>
-        <span>{c.t}</span>
-      </div>
+      {#if c.link}
+        <a class="cd-curr-row cd-curr-link" href={c.link} target="_blank" rel="noreferrer">
+          <span class="cd-curr-v">{c.v}</span>
+          <span class="cd-curr-text">{c.t}</span>
+          <span class="cd-curr-arr">→</span>
+        </a>
+      {:else}
+        <div class="cd-curr-row">
+          <span class="cd-curr-v">{c.v}</span>
+          <span>{c.t}</span>
+        </div>
+      {/if}
     {/each}
   </div>
 

@@ -43,13 +43,14 @@ export interface Note {
 export interface CurrentlyItem {
   v: string;
   t: string;
+  link?: string;
 }
 
 export const PROJECTS: Project[] = [
   {
     id: 'eval-agent',
     title: 'eval-agent',
-    org: 'wasserstoff',
+    org: 'Litt',
     year: '2026',
     started: '2026-01',
     blurb: 'judge-as-a-service · llm trace forensics',
@@ -132,7 +133,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'browser-auto',
     title: 'browser-automation',
-    org: 'wasserstoff',
+    org: 'Litt',
     year: '2025',
     started: '2025-08',
     ended: '2025-12',
@@ -160,7 +161,7 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCE: Experience[] = [
   {
-    co: 'wasserstoff',
+    co: 'Litt',
     role: 'ai/ml engineer',
     when: 'jun 2025 — now',
     location: 'delhi, IN',
@@ -211,9 +212,8 @@ export const NOTES: Note[] = [
 
 export const CURRENTLY: CurrentlyItem[] = [
   { v: 'building', t: 'eval-agent v0.8 · adversarial coverage' },
-  { v: 'reading', t: 'cuda c best practices guide' },
-  { v: 'writing', t: 'kernel-journal · ch. 14' },
-  { v: 'listening', t: 'tycho · simulcast' },
+  { v: 'reading',  t: 'cuda c best practices guide', link: 'https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/' },
+  { v: 'writing',  t: 'kernel-journal · ch. 14' },
 ];
 
 export function makeContribGraph(seed = 11): number[][] {

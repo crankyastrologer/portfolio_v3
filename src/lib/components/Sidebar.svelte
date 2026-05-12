@@ -105,7 +105,7 @@
         {#if open.experience}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
             <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-            <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('experience')}>— wasserstoff.log</div>
+            <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('experience')}>— Litt.log</div>
             <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
             <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('experience')}>— iiitd.log</div>
           </div>

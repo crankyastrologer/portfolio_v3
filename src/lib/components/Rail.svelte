@@ -84,7 +84,7 @@
         return r.json();
       })
       .then((evs: any[]) => {
-        const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 14);
+        const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 14).reverse();
         entries     = lines.length ? lines : LOG_FEED;
         fetchState  = lines.length ? 'live' : 'fallback';
         stream(entries);
@@ -100,10 +100,10 @@
   let hoveredExp = $state<string | null>(null);
 
   const STACK = [
-    { label: 'ml',   color: 'var(--blue)',      items: ['pytorch', 'cuda', 'langchain', 'qdrant', 'sklearn'] },
-    { label: 'web',  color: 'var(--cd-accent)', items: ['svelte', 'next', 'hono', 'fastapi', 'flask'] },
+    { label: 'ml',   color: 'var(--blue)',      items: ['pytorch', 'cuda', 'directml', 'langchain', 'qdrant', 'sklearn'] },
+    { label: 'web',  color: 'var(--cd-accent)', items: ['svelte', 'next', 'hono', 'fastapi', 'flask', 'graphql'] },
     { label: 'db',   color: 'var(--amber)',      items: ['mongo', 'redis', 'postgres'] },
-    { label: 'lang', color: 'var(--red)',        items: ['python', 'c/c++', 'typescript', 'java'] },
+    { label: 'lang', color: 'var(--red)',        items: ['python', 'rust', 'c/c++', 'typescript', 'java'] },
     { label: 'cert', color: 'var(--fg-3)',       items: ['aws', 'nptel c++', 'nptel bizan'] },
   ];
 </script>

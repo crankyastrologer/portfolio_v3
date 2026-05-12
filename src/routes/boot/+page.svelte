@@ -20,13 +20,13 @@
   const FS: Record<string, FSFn> = {
     'whoami': () => [
       'ansh verma',
-      'ai/ml engineer · wasserstoff',
+      'ai/ml engineer · Litt',
       'b.tech cs · northcap university · 9.0 cgpa · 2021–2025',
       'delhi, india · ' + new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }) + ' IST',
     ],
     'ls': () => [
       'drwx------  ansh  staff   work/        # eval-agent, dineleap, gpt-2-cuda',
-      'drwxr-xr-x  ansh  staff   experience/  # wasserstoff, iiitd',
+      'drwxr-xr-x  ansh  staff   experience/  # Litt, iiitd',
       '-rw-r--r--  ansh  staff   resume.pdf',
       '-rw-r--r--  ansh  staff   contact.md',
       '-rw-r--r--  ansh  staff   chat.link    # → chat.ansh.site',
@@ -34,7 +34,7 @@
     'cat about': () => [
       'i build agents that watch other agents work, and the kernels that make them fast.',
       '',
-      'currently @ wasserstoff, where i architect "judge-as-a-service" frameworks for',
+      'currently @ Litt, where i architect "judge-as-a-service" frameworks for',
       'auditing multi-agent llm traces — sub-second retrieval over a dual-storage',
       'opentelemetry pipeline, plus an adversarial suite (distinguisher, proceduralist,',
       'shepardizer) that stress-tests agentic decision-making.',
@@ -46,7 +46,7 @@
     ],
     'cat resume': () => [
       '# experience',
-      '  wasserstoff           ai/ml engineer       jun 2025 – present',
+      '  Litt           ai/ml engineer       jun 2025 – present',
       '  iiit delhi            research intern      jun 2023 – aug 2023',
       '',
       '# projects',

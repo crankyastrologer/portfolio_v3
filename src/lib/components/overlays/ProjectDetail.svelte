@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PROJECTS } from '$lib/data';
-  import Sparkline from './Sparkline.svelte';
+  import Sparkline from '../base/Sparkline.svelte';
 
   let {
     projId,

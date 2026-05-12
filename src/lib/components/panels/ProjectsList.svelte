@@ -1,6 +1,7 @@
 <script lang="ts">
   import { PROJECTS } from '$lib/data';
-  import Sparkline from './Sparkline.svelte';
+  const VISIBLE = PROJECTS.filter(p => !p.hidden);
+  import Sparkline from '../base/Sparkline.svelte';
 
   let {
     activeProj,
@@ -16,10 +17,10 @@
 <div class="cd-panel">
   <div class="cd-panel-head">
     <span class="cd-panel-title">work[].json</span>
-    <span class="cd-dim">{PROJECTS.length} entries · sorted by recency</span>
+    <span class="cd-dim">{VISIBLE.length} entries · sorted by recency</span>
   </div>
   <div class="cd-projects">
-    {#each PROJECTS as p, idx}
+    {#each VISIBLE as p, idx}
       <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
       <div
         class="cd-proj"

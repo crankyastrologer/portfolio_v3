@@ -1,15 +1,19 @@
 import adapter from '@sveltejs/adapter-static';
+import { mdsvex } from 'mdsvex';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	extensions: ['.svelte', '.md'],
+	preprocess: [mdsvex({ extensions: ['.md'] })],
 	compilerOptions: {
-		// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
-		runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
+		// Force runes mode for project files, but not .md files (mdsvex generates Svelte 4 output)
+		runes: ({ filename }) => {
+			if (filename.endsWith('.md')) return undefined;
+			if (filename.split(/[/\\]/).includes('node_modules')) return undefined;
+			return true;
+		}
 	},
 	kit: {
-		// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-		// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-		// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 		adapter: adapter({ fallback: undefined }),
 		prerender: { handleHttpError: 'warn' }
 	}

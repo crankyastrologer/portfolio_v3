@@ -1,16 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Sidebar from '$lib/components/Sidebar.svelte';
-  import Hero from '$lib/components/Hero.svelte';
-  import ProjectsList from '$lib/components/ProjectsList.svelte';
-  import ContribPanel from '$lib/components/ContribPanel.svelte';
-  import NotesPanel from '$lib/components/NotesPanel.svelte';
-  import Rail from '$lib/components/Rail.svelte';
-  import ProjectDetail from '$lib/components/ProjectDetail.svelte';
-  import ContactModal from '$lib/components/ContactModal.svelte';
-  import TechPanel from '$lib/components/TechPanel.svelte';
-  import Palette from '$lib/components/Palette.svelte';
-  import Pulse from '$lib/components/Pulse.svelte';
+  import Sidebar from '$lib/components/layout/Sidebar.svelte';
+  import Rail from '$lib/components/layout/Rail.svelte';
+  import Hero from '$lib/components/panels/Hero.svelte';
+  import ProjectsList from '$lib/components/panels/ProjectsList.svelte';
+  import ContribPanel from '$lib/components/panels/ContribPanel.svelte';
+  import NotesPanel from '$lib/components/panels/NotesPanel.svelte';
+  import ProjectDetail from '$lib/components/overlays/ProjectDetail.svelte';
+  import ContactModal from '$lib/components/overlays/ContactModal.svelte';
+  import TechPanel from '$lib/components/overlays/TechPanel.svelte';
+  import Palette from '$lib/components/overlays/Palette.svelte';
+  import Pulse from '$lib/components/base/Pulse.svelte';
 
   // Theme / tweaks
   let accent = $state('#7CE38B');

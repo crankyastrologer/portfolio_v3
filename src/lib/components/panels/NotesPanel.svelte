@@ -9,8 +9,7 @@
   </div>
   <div class="cd-notes">
     {#each NOTES as n}
-      <!-- svelte-ignore a11y_invalid_attribute -->
-      <a class="cd-note" href="#">
+      <a class="cd-note" href="/notes/{n.slug}">
         <span class="cd-dim cd-note-t">{n.t}</span>
         <span class="cd-note-title">{n.title}</span>
         <span class="cd-tag">{n.tag}</span>

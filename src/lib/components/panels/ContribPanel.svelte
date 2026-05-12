@@ -3,6 +3,8 @@
 
   let { onOpenProj }: { onOpenProj: (id: string) => void } = $props();
 
+  const VISIBLE = PROJECTS.filter(p => !p.hidden);
+
   function parseYM(s: string) {
     const [y, m] = s.split('-').map(Number);
     return y * 12 + m;
@@ -17,7 +19,7 @@
 
   const now     = new Date();
   const nowYM   = now.getFullYear() * 12 + (now.getMonth() + 1);
-  const winStart = Math.min(...PROJECTS.map(p => parseYM(p.started)));
+  const winStart = Math.min(...VISIBLE.map(p => parseYM(p.started)));
   const winEnd   = nowYM;
   const total    = winEnd - winStart + 1;
 
@@ -46,7 +48,7 @@
 <div class="cd-panel">
   <div class="cd-panel-head">
     <span class="cd-panel-title">project.timeline</span>
-    <span class="cd-dim">{total} months · {PROJECTS.length} projects</span>
+    <span class="cd-dim">{total} months · {VISIBLE.length} projects</span>
   </div>
   <div class="cd-gantt">
     <!-- month axis -->
@@ -60,7 +62,7 @@
     </div>
 
     <!-- project rows -->
-    {#each PROJECTS as p}
+    {#each VISIBLE as p}
       {@const b = bar(p)}
       <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
       <div class="cd-gantt-row" onclick={() => onOpenProj(p.id)}>

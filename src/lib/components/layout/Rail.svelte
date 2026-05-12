@@ -3,7 +3,7 @@
   import { slide, fade } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { LOG_FEED, EXPERIENCE, type LogEntry } from '$lib/data';
-  import Pulse from './Pulse.svelte';
+  import Pulse from '../base/Pulse.svelte';
 
   let {
     now,
@@ -23,6 +23,7 @@
   let entries     = $state<LogEntry[]>([]);
   let visible     = $state(0);
   let fetchState  = $state<'loading' | 'live' | 'fallback'>('loading');
+  let logEl       = $state<HTMLElement | null>(null);
 
   function relTime(iso: string): string {
     const diff  = Date.now() - new Date(iso).getTime();
@@ -72,6 +73,10 @@
       if (i >= list.length) return;
       visible = i + 1;
       i++;
+      // keep newest entry visible as log fills up
+      setTimeout(() => {
+        if (logEl) logEl.scrollTop = logEl.scrollHeight;
+      }, 0);
       setTimeout(next, 110 + Math.random() * 140);
     }
     setTimeout(next, 300);
@@ -84,13 +89,13 @@
         return r.json();
       })
       .then((evs: any[]) => {
-        const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 14).reverse();
-        entries     = lines.length ? lines : LOG_FEED;
+        const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 3).reverse();
+        entries     = lines.length ? lines : LOG_FEED.slice(-3);
         fetchState  = lines.length ? 'live' : 'fallback';
         stream(entries);
       })
       .catch(() => {
-        entries    = LOG_FEED;
+        entries    = LOG_FEED.slice(-3);
         fetchState = 'fallback';
         stream(entries);
       });
@@ -100,11 +105,11 @@
   let hoveredExp = $state<string | null>(null);
 
   const STACK = [
-    { label: 'ml',   color: 'var(--blue)',      items: ['pytorch', 'cuda', 'directml', 'langchain', 'qdrant', 'sklearn'] },
-    { label: 'web',  color: 'var(--cd-accent)', items: ['svelte', 'next', 'hono', 'fastapi', 'flask', 'graphql'] },
-    { label: 'db',   color: 'var(--amber)',      items: ['mongo', 'redis', 'postgres'] },
-    { label: 'lang', color: 'var(--red)',        items: ['python', 'rust', 'c/c++', 'typescript', 'java'] },
-    { label: 'cert', color: 'var(--fg-3)',       items: ['aws', 'nptel c++', 'nptel bizan'] },
+    { label: 'ml',   color: 'var(--blue)',      clickable: true,  items: ['pytorch', 'cuda', 'directml', 'langchain', 'qdrant', 'sklearn'] },
+    { label: 'web',  color: 'var(--cd-accent)', clickable: true,  items: ['svelte', 'next', 'hono', 'fastapi', 'flask', 'graphql'] },
+    { label: 'db',   color: 'var(--amber)',      clickable: true,  items: ['mongo', 'redis', 'postgres'] },
+    { label: 'lang', color: 'var(--red)',        clickable: true,  items: ['python', 'rust', 'c/c++', 'typescript', 'java'] },
+    { label: 'cert', color: 'var(--fg-3)',       clickable: false, items: ['aws', 'nptel c++', 'nptel bizan'] },
   ];
 </script>
 
@@ -121,7 +126,7 @@
         <span class="cd-dim" style="font-size:10px">cached</span>
       {/if}
     </div>
-    <div class="cd-log">
+    <div class="cd-log" bind:this={logEl}>
       {#each entries.slice(0, visible) as l}
         <div class="cd-log-line">
           <span class="cd-dim">{l.t}</span>
@@ -198,7 +203,11 @@
           <span class="cd-stack-cat">{cat.label}</span>
           <div class="cd-stack-pills">
             {#each cat.items as item}
-              <button class="cd-stack-pill" style="--cat: {cat.color};" onclick={() => onSelectTech(item)}>{item}</button>
+              {#if cat.clickable}
+                <button class="cd-stack-pill" style="--cat: {cat.color};" onclick={() => onSelectTech(item)}>{item}</button>
+              {:else}
+                <span class="cd-stack-pill cd-stack-pill-static" style="--cat: {cat.color};">{item}</span>
+              {/if}
             {/each}
           </div>
         </div>

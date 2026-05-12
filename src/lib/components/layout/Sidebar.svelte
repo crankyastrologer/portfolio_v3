@@ -2,6 +2,7 @@
   import { slide } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
   import { PROJECTS, NOTES, CURRENTLY } from '$lib/data';
+  const VISIBLE = PROJECTS.filter(p => !p.hidden);
 
   let {
     activeProj,
@@ -72,7 +73,7 @@
         </div>
         {#if open.work}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
-            {#each PROJECTS as p}
+            {#each VISIBLE as p}
               <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
               <div
                 class="cd-tree-file cd-indent2"
@@ -91,8 +92,7 @@
         {#if open.notes}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
             {#each NOTES.slice(0, 3) as n}
-              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-              <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('notes')}>— {n.title.slice(0, 22)}…</div>
+              <a class="cd-tree-file cd-indent2" href="/notes/{n.slug}">— {n.title.slice(0, 22)}…</a>
             {/each}
           </div>
         {/if}

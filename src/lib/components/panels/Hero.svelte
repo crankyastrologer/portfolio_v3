@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Pulse from './Pulse.svelte';
+  import Pulse from '../base/Pulse.svelte';
 </script>
 
 <section class="cd-hero">

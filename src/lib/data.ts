@@ -18,6 +18,7 @@ export interface Project {
   spark: number[];
   href: string;
   status: 'shipping' | 'live' | 'archived';
+  hidden?: boolean;  // hidden from main list/sidebar/gantt; still searchable via stack pills
 }
 
 export interface Experience {
@@ -38,6 +39,7 @@ export interface Note {
   t: string;
   title: string;
   tag: string;
+  slug: string;
 }
 
 export interface CurrentlyItem {
@@ -186,6 +188,7 @@ export const PROJECTS: Project[] = [
     spark: [1,2,2,3,4,4,5,6,6,7,8,8,9,9,10,10,10,11,10,10],
     href: 'https://github.com/crankyastrologer/LLM_from_scratch',
     status: 'archived',
+    hidden: true,
   },
   {
     id: 'rust-webserver',
@@ -215,6 +218,7 @@ export const PROJECTS: Project[] = [
     spark: [5,6,7,8,9,10,10,11,10,10,9,9,8,8,8,7,7,6,6,5],
     href: 'https://github.com/crankyastrologer/Rust_multithreaded_webserver',
     status: 'archived',
+    hidden: true,
   },
   {
     id: 'chatbot-theme',
@@ -242,6 +246,85 @@ export const PROJECTS: Project[] = [
     spark: [3,4,5,5,6,7,7,8,8,9,9,10,10,10,9,9,9,8,8,8],
     href: 'https://github.com/crankyastrologer/chatbot-theme-identifier',
     status: 'archived',
+    hidden: true,
+  },
+  {
+    id: 'rag-chain',
+    title: 'rag-chain',
+    org: 'side-project',
+    year: '2025',
+    started: '2025-04',
+    ended: '2025-06',
+    blurb: 'retrieval-augmented generation · semantic search',
+    long: [
+      'a RAG pipeline with semantic chunking, embedding via sentence-transformers,',
+      'and retrieval over a qdrant vector store.',
+      '',
+      'query rewriting + re-ranking pass before generation to improve',
+      'answer faithfulness over long documents.',
+    ],
+    stack: ['python', 'qdrant', 'langchain', 'fastapi'],
+    metrics: [
+      { label: 'retrieval', value: 'semantic', delta: 'top-k=5' },
+      { label: 'rerank', value: 'cross-enc', delta: 'faithfulness' },
+      { label: 'latency', value: '~800ms', delta: 'e2e' },
+    ],
+    spark: [3,4,5,6,7,8,8,9,9,10,9,9,8,8,7,7,6,6,5,5],
+    href: 'https://github.com/crankyastrologer/RAG_chain_backend',
+    status: 'archived',
+    hidden: true,
+  },
+  {
+    id: 'news-app',
+    title: 'news-app',
+    org: 'side-project',
+    year: '2024',
+    started: '2024-06',
+    ended: '2024-08',
+    blurb: 'svelte news aggregator · graphql · hygraph cms',
+    long: [
+      'a news aggregation frontend built with svelte, pulling content from',
+      'a hygraph headless CMS over graphql.',
+      '',
+      'cdn-optimised images via uploadthing, deployed on vercel with',
+      'edge caching for near-instant loads.',
+    ],
+    stack: ['svelte', 'graphql', 'typescript', 'vercel'],
+    metrics: [
+      { label: 'cms', value: 'hygraph', delta: 'graphql' },
+      { label: 'deploy', value: 'vercel', delta: 'edge cache' },
+      { label: 'ttfb', value: '<100ms', delta: 'cdn' },
+    ],
+    spark: [4,5,5,6,6,7,7,8,8,8,7,7,6,6,6,5,5,5,4,4],
+    href: 'https://github.com/crankyastrologer/NewsApp',
+    status: 'archived',
+    hidden: true,
+  },
+  {
+    id: 'geo-referencing',
+    title: 'geo-referencing',
+    org: 'iiit delhi',
+    year: '2023',
+    started: '2023-06',
+    ended: '2023-08',
+    blurb: 'satellite image alignment · geospatial pipeline',
+    long: [
+      'geospatial data pipeline built during the iiit delhi research internship.',
+      'aligns satellite imagery to ground-truth coordinates using feature',
+      'matching and affine transforms.',
+      '',
+      'rebuilt the existing data pipeline, cutting website load time 5×.',
+    ],
+    stack: ['python', 'numpy', 'mongo', 'sklearn'],
+    metrics: [
+      { label: 'load time', value: '−80%', delta: 'vs baseline' },
+      { label: 'images', value: 'satellite', delta: 'aligned' },
+      { label: 'pipeline', value: 'automated', delta: 'mongo' },
+    ],
+    spark: [5,6,7,8,9,9,10,10,9,8,8,7,7,6,6,5,5,4,4,4],
+    href: '#',
+    status: 'archived',
+    hidden: true,
   },
 ];
 
@@ -289,11 +372,11 @@ export const LOG_FEED: LogEntry[] = [
 ];
 
 export const NOTES: Note[] = [
-  { t: '2026.04', title: 'why i write cuda kernels by hand', tag: 'systems' },
-  { t: '2026.03', title: 'judging an llm is a search problem', tag: 'eval' },
-  { t: '2026.02', title: 'on logging at the trace level, not the request level', tag: 'otel' },
-  { t: '2026.01', title: 'attention is a transpose', tag: 'systems' },
-  { t: '2025.12', title: 'a kernel journal · ch. 1', tag: 'systems' },
+  { t: '2026.04', title: 'why i write cuda kernels by hand',                  tag: 'systems', slug: 'why-i-write-cuda-kernels'   },
+  { t: '2026.03', title: 'judging an llm is a search problem',                tag: 'eval',    slug: 'judging-an-llm'             },
+  { t: '2026.02', title: 'on logging at the trace level, not the request level', tag: 'otel', slug: 'logging-at-trace-level'     },
+  { t: '2026.01', title: 'attention is a transpose',                          tag: 'systems', slug: 'attention-is-a-transpose'   },
+  { t: '2025.12', title: 'a kernel journal · ch. 1',                          tag: 'systems', slug: 'kernel-journal-ch-1'        },
 ];
 
 export const CURRENTLY: CurrentlyItem[] = [

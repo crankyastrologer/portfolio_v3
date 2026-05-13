@@ -92,7 +92,7 @@
         {#if open.notes}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
             {#each NOTES.slice(0, 3) as n}
-              <a class="cd-tree-file cd-indent2" href="/notes/{n.slug}">— {n.title.slice(0, 22)}…</a>
+              <a class="cd-tree-file cd-indent2" href="/notes/{n.slug}" data-sveltekit-preload-data="hover">— {n.title.slice(0, 22)}…</a>
             {/each}
           </div>
         {/if}

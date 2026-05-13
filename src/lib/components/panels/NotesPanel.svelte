@@ -9,7 +9,7 @@
   </div>
   <div class="cd-notes">
     {#each NOTES as n}
-      <a class="cd-note" href="/notes/{n.slug}">
+      <a class="cd-note" href="/notes/{n.slug}" data-sveltekit-preload-data="hover">
         <span class="cd-dim cd-note-t">{n.t}</span>
         <span class="cd-note-title">{n.title}</span>
         <span class="cd-tag">{n.tag}</span>

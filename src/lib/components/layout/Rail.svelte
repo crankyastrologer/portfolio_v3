@@ -82,17 +82,39 @@
     setTimeout(next, 300);
   }
 
+  const GH_CACHE_KEY  = 'gh-events';
+  const GH_CACHE_TIME = 'gh-events-ts';
+  const GH_TTL        = 10 * 60 * 1000; // 10 minutes
+
+  function applyEvents(evs: any[]) {
+    const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 3).reverse();
+    entries    = lines.length ? lines : LOG_FEED.slice(-3);
+    fetchState = lines.length ? 'live' : 'fallback';
+    stream(entries);
+  }
+
   onMount(() => {
+    // Serve from sessionStorage if <10 min old
+    try {
+      const ts  = sessionStorage.getItem(GH_CACHE_TIME);
+      const raw = sessionStorage.getItem(GH_CACHE_KEY);
+      if (ts && raw && Date.now() - Number(ts) < GH_TTL) {
+        applyEvents(JSON.parse(raw));
+        return;
+      }
+    } catch { /* sessionStorage unavailable or parse error */ }
+
     fetch('https://api.github.com/users/crankyastrologer/events/public')
       .then(r => {
         if (!r.ok) throw new Error(r.statusText);
         return r.json();
       })
       .then((evs: any[]) => {
-        const lines = evs.map(fmtEvent).filter((l): l is LogEntry => l !== null).slice(0, 3).reverse();
-        entries     = lines.length ? lines : LOG_FEED.slice(-3);
-        fetchState  = lines.length ? 'live' : 'fallback';
-        stream(entries);
+        try {
+          sessionStorage.setItem(GH_CACHE_KEY,  JSON.stringify(evs));
+          sessionStorage.setItem(GH_CACHE_TIME, String(Date.now()));
+        } catch { /* storage full or blocked */ }
+        applyEvents(evs);
       })
       .catch(() => {
         entries    = LOG_FEED.slice(-3);

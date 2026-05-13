@@ -1,19 +1,54 @@
 <script lang="ts">
+  import { PUBLIC_WEB3FORMS_KEY } from '$env/static/public';
+
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
-  let name = $state('');
-  let email = $state('');
+  let name    = $state('');
+  let email   = $state('');
   let message = $state('');
-  let sent = $state(false);
+  let botcheck = $state(''); // honeypot — must stay empty
 
-  function handleSubmit(e: SubmitEvent) {
+  type Status = 'idle' | 'sending' | 'success' | 'error';
+  let status  = $state<Status>('idle');
+  let errMsg  = $state('');
+
+  async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
-    const subject = encodeURIComponent(`hey ansh — from ${name}`);
-    const body = encodeURIComponent(`${message}\n\n— ${name} <${email}>`);
-    window.open(`mailto:ansh0verma@gmail.com?subject=${subject}&body=${body}`);
-    sent = true;
-    setTimeout(() => { sent = false; name = ''; email = ''; message = ''; onClose(); }, 1800);
+    if (botcheck) return; // silently drop bot submissions
+    status = 'sending';
+    errMsg = '';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: PUBLIC_WEB3FORMS_KEY,
+          subject:    `hey ansh — from ${name}`,
+          from_name:  name,
+          name,
+          email,
+          message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        status = 'success';
+        setTimeout(() => {
+          status = 'idle';
+          name = ''; email = ''; message = '';
+          onClose();
+        }, 2200);
+      } else {
+        throw new Error(data.message ?? 'submission failed');
+      }
+    } catch (err: any) {
+      status = 'error';
+      errMsg = err?.message ?? 'something went wrong — try emailing directly.';
+    }
   }
+
+  function reset() { status = 'idle'; errMsg = ''; }
 </script>
 
 {#if open}
@@ -30,11 +65,24 @@
       </div>
 
       <div class="cd-detail-body cd-contact-body">
-        {#if sent}
-          <div class="cd-contact-sent">
-            <span class="cd-accent">✓</span> opening your mail client…
+
+        {#if status === 'success'}
+          <!-- ── Success ── -->
+          <div class="cd-contact-state">
+            <span class="cd-contact-state-icon cd-contact-ok">✓</span>
+            <p class="cd-contact-state-msg">message sent — i'll get back to you soon.</p>
           </div>
+
+        {:else if status === 'error'}
+          <!-- ── Error ── -->
+          <div class="cd-contact-state">
+            <span class="cd-contact-state-icon cd-contact-err">✕</span>
+            <p class="cd-contact-state-msg">{errMsg}</p>
+            <button class="cd-cta cd-cta-primary" onclick={reset}>try again</button>
+          </div>
+
         {:else}
+          <!-- ── Form ── -->
           <div class="cd-detail-tag">// get in touch · response within 24h</div>
           <h2 class="cd-detail-h">say hello.</h2>
           <p class="cd-contact-intro">
@@ -43,6 +91,16 @@
           </p>
 
           <form class="cd-contact-form" onsubmit={handleSubmit}>
+            <!-- honeypot — hidden from real users -->
+            <input
+              type="checkbox"
+              name="botcheck"
+              bind:checked={botcheck as any}
+              style="display:none"
+              tabindex="-1"
+              autocomplete="off"
+            />
+
             <label class="cd-contact-field">
               <span class="cd-contact-label"><span class="cd-accent">›</span> name</span>
               <input
@@ -52,6 +110,7 @@
                 placeholder="your name"
                 required
                 autocomplete="name"
+                disabled={status === 'sending'}
               />
             </label>
             <label class="cd-contact-field">
@@ -63,6 +122,7 @@
                 placeholder="you@example.com"
                 required
                 autocomplete="email"
+                disabled={status === 'sending'}
               />
             </label>
             <label class="cd-contact-field">
@@ -73,11 +133,21 @@
                 placeholder="what's on your mind?"
                 required
                 rows="5"
+                disabled={status === 'sending'}
               ></textarea>
             </label>
+
             <div class="cd-detail-cta">
-              <button type="submit" class="cd-cta cd-cta-primary">
-                send message <span class="cd-arr">↗</span>
+              <button
+                type="submit"
+                class="cd-cta cd-cta-primary"
+                disabled={status === 'sending'}
+              >
+                {#if status === 'sending'}
+                  <span class="cd-contact-spinner"></span> sending…
+                {:else}
+                  send message <span class="cd-arr">↗</span>
+                {/if}
               </button>
               <button type="button" class="cd-cta" onclick={onClose}>← back</button>
             </div>

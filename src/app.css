@@ -1,5 +1,5 @@
 /* ===== Console Dashboard ===== */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+/* JetBrains Mono loaded via <link> in app.html — no @import needed here */
 
 :root {
   --bg: oklch(0.155 0.006 240);
@@ -768,6 +768,43 @@ button { font: inherit; color: inherit; cursor: pointer; }
   padding: 60px 0;
   justify-content: center;
 }
+
+/* submission states */
+.cd-contact-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 64px 0;
+  text-align: center;
+}
+.cd-contact-state-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.cd-contact-ok  { color: var(--cd-accent); }
+.cd-contact-err { color: var(--red, #E06C75); }
+.cd-contact-state-msg {
+  font-size: 13px;
+  color: var(--fg-1);
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+/* sending spinner */
+.cd-contact-spinner {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border: 2px solid color-mix(in oklch, var(--cd-accent) 30%, transparent);
+  border-top-color: var(--cd-accent);
+  border-radius: 50%;
+  animation: cd-spin 0.7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes cd-spin { to { transform: rotate(360deg); } }
+
+.cd-cta:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* ===== ACCENT PICKER ===== */
 .cd-accent-wrap { position: relative; display: flex; align-items: center; }

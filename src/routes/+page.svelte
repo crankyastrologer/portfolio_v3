@@ -6,10 +6,11 @@
   import ProjectsList from '$lib/components/panels/ProjectsList.svelte';
   import ContribPanel from '$lib/components/panels/ContribPanel.svelte';
   import NotesPanel from '$lib/components/panels/NotesPanel.svelte';
-  import ProjectDetail from '$lib/components/overlays/ProjectDetail.svelte';
-  import ContactModal from '$lib/components/overlays/ContactModal.svelte';
-  import TechPanel from '$lib/components/overlays/TechPanel.svelte';
-  import Palette from '$lib/components/overlays/Palette.svelte';
+  // Overlays are lazy-loaded after mount — they're never needed on first render
+  let ProjectDetail = $state<any>(null);
+  let ContactModal  = $state<any>(null);
+  let TechPanel     = $state<any>(null);
+  let Palette       = $state<any>(null);
   import Pulse from '$lib/components/base/Pulse.svelte';
 
   // Theme / tweaks
@@ -60,6 +61,20 @@
 
   onMount(() => {
     const clockId = setInterval(() => { now = new Date(); }, 1000);
+
+    // Load overlays after first paint — they're never needed immediately
+    Promise.all([
+      import('$lib/components/overlays/ProjectDetail.svelte'),
+      import('$lib/components/overlays/ContactModal.svelte'),
+      import('$lib/components/overlays/TechPanel.svelte'),
+      import('$lib/components/overlays/Palette.svelte'),
+    ]).then(([pd, cm, tp, pal]) => {
+      ProjectDetail = pd.default;
+      ContactModal  = cm.default;
+      TechPanel     = tp.default;
+      Palette       = pal.default;
+    });
+
     return () => clearInterval(clockId);
   });
 
@@ -236,13 +251,9 @@
     <button class:is-active={mobileSidebarOpen} onclick={() => mobileSidebarOpen = !mobileSidebarOpen}>files</button>
   </nav>
 
-  <!-- Overlays -->
-  <ProjectDetail projId={openProj} onClose={() => openProj = null} />
-  <ContactModal open={contactOpen} onClose={() => contactOpen = false} />
-  <TechPanel tech={activeTech} onClose={() => activeTech = null} onOpenProj={(id) => { openProj = id; activeTech = null; }} />
-  <Palette
-    open={paletteOpen}
-    onClose={() => paletteOpen = false}
-    onOpenProj={(id) => { openProj = id; paletteOpen = false; }}
-  />
+  <!-- Overlays (lazy-loaded after mount) -->
+  <svelte:component this={ProjectDetail} projId={openProj} onClose={() => openProj = null} />
+  <svelte:component this={ContactModal}  open={contactOpen} onClose={() => contactOpen = false} />
+  <svelte:component this={TechPanel}     tech={activeTech} onClose={() => activeTech = null} onOpenProj={(id) => { openProj = id; activeTech = null; }} />
+  <svelte:component this={Palette}       open={paletteOpen} onClose={() => paletteOpen = false} onOpenProj={(id) => { openProj = id; paletteOpen = false; }} />
 </div>

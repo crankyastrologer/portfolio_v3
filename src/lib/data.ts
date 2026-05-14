@@ -372,6 +372,7 @@ export const LOG_FEED: LogEntry[] = [
 ];
 
 export const NOTES: Note[] = [
+  { t: '2026.05', title: 'how we built the eval system at litt',              tag: 'eval',    slug: 'eval-system-at-litt'        },
   { t: '2026.04', title: 'why i write cuda kernels by hand',                  tag: 'systems', slug: 'why-i-write-cuda-kernels'   },
   { t: '2026.03', title: 'judging an llm is a search problem',                tag: 'eval',    slug: 'judging-an-llm'             },
   { t: '2026.02', title: 'on logging at the trace level, not the request level', tag: 'otel', slug: 'logging-at-trace-level'     },

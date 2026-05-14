@@ -128,7 +128,7 @@
 
   const STACK = [
     { label: 'ml',   color: 'var(--blue)',      clickable: true,  items: ['pytorch', 'cuda', 'directml', 'langchain', 'qdrant', 'sklearn'] },
-    { label: 'web',  color: 'var(--cd-accent)', clickable: true,  items: ['svelte', 'next', 'hono', 'fastapi', 'flask', 'graphql'] },
+    { label: 'web',  color: 'var(--cyan)',        clickable: true,  items: ['svelte', 'next', 'hono', 'fastapi', 'flask', 'graphql'] },
     { label: 'db',   color: 'var(--amber)',      clickable: true,  items: ['mongo', 'redis', 'postgres'] },
     { label: 'lang', color: 'var(--red)',        clickable: true,  items: ['python', 'rust', 'c/c++', 'typescript', 'java'] },
     { label: 'cert', color: 'var(--fg-3)',       clickable: false, items: ['aws', 'nptel c++', 'nptel bizan'] },
@@ -174,10 +174,10 @@
       {#each EXPERIENCE as e, i}
         {@const isCurrent = e.when.includes('now')}
         {@const expanded  = hoveredExp === e.co}
-        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div
           class="cd-tl-entry"
           class:is-current={isCurrent}
+          role="listitem"
           onmouseenter={() => hoveredExp = e.co}
           onmouseleave={() => hoveredExp = null}
         >

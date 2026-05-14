@@ -14,10 +14,8 @@
 </script>
 
 {#if p}
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="cd-detail-overlay" onclick={onClose}>
-    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="cd-detail" onclick={(e) => e.stopPropagation()}>
+  <div class="cd-detail-overlay" role="presentation" onclick={onClose}>
+    <div class="cd-detail" role="dialog" aria-modal="true" onclick={(e) => e.stopPropagation()}>
       <div class="cd-detail-head">
         <div class="cd-detail-bcrumb">
           <span class="cd-dim">work / </span>

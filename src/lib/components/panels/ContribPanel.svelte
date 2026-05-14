@@ -64,8 +64,7 @@
     <!-- project rows -->
     {#each VISIBLE as p}
       {@const b = bar(p)}
-      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-      <div class="cd-gantt-row" onclick={() => onOpenProj(p.id)}>
+      <div class="cd-gantt-row" role="button" tabindex="0" onclick={() => onOpenProj(p.id)} onkeydown={(e) => e.key === 'Enter' && onOpenProj(p.id)}>
         <div class="cd-gantt-name">
           <span class="cd-gantt-title">{p.title}</span>
           <span class="cd-gantt-status" style="color:{b.color};">{p.status}</span>

@@ -13,6 +13,7 @@
   --fg-2: oklch(0.66 0.010 240);
   --fg-3: oklch(0.50 0.012 240);
   --blue: oklch(0.78 0.13 250);
+  --cyan: oklch(0.78 0.10 210);
   --amber: oklch(0.78 0.17 75);
   --red: oklch(0.74 0.17 25);
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;

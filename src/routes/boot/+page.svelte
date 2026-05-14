@@ -196,8 +196,7 @@
   }
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-<div class="boot-root" onclick={() => inputEl?.focus()}>
+<div class="boot-root" role="presentation" onclick={() => inputEl?.focus()}>
   <!-- Window chrome -->
   <div class="boot-chrome">
     <div class="boot-dots">
@@ -242,8 +241,7 @@
     {/each}
 
     {#if !booting}
-      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-      <div class="boot-line boot-input-row">
+      <div class="boot-line boot-input-row" role="presentation">
         <span class="boot-prompt">ansh@portfolio</span><span class="boot-sep">:</span><span class="boot-path">~</span><span class="boot-sep">$ </span>
         <span class="boot-input-wrap">
           <span>{input}</span>
@@ -271,7 +269,6 @@
     </div>
     <div class="boot-status-right">
       {#each SUGGESTIONS as s}
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
         <button
           class="boot-sug"
           onclick={(e) => { e.stopPropagation(); run(s); inputEl?.focus(); }}

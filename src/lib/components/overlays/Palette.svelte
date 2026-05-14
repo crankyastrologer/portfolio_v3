@@ -52,10 +52,8 @@
 </script>
 
 {#if open}
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-  <div class="cd-palette-overlay" onclick={onClose}>
-    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="cd-palette" onclick={(e) => e.stopPropagation()}>
+  <div class="cd-palette-overlay" role="presentation" onclick={onClose}>
+    <div class="cd-palette" role="dialog" aria-modal="true" onclick={(e) => e.stopPropagation()}>
       <div class="cd-palette-input-row">
         <span class="cd-prompt">›</span>
         <input
@@ -75,12 +73,14 @@
           <div class="cd-palette-empty">no matches.</div>
         {/if}
         {#each filtered as it, i}
-          <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
           <div
             class="cd-palette-item"
             class:is-sel={i === sel}
+            role="button"
+            tabindex="0"
             onmouseenter={() => sel = i}
             onclick={() => activate(it)}
+            onkeydown={(e) => e.key === 'Enter' && activate(it)}
           >
             <span class="cd-palette-kind cd-pk-{it.kind}">{it.kind}</span>
             <span class="cd-palette-label">{it.label}</span>

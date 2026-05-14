@@ -141,8 +141,7 @@
           aria-label="choose accent color"
         ></button>
         {#if accentPickerOpen}
-          <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-          <div class="cd-accent-backdrop" onclick={() => accentPickerOpen = false}></div>
+          <div class="cd-accent-backdrop" role="presentation" onclick={() => accentPickerOpen = false}></div>
           <div class="cd-accent-picker">
             <div class="cd-accent-picker-label">accent</div>
             <div class="cd-accent-swatches">
@@ -168,13 +167,10 @@
 
   <!-- Mobile sidebar backdrop -->
   {#if mobileSidebarOpen}
-    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="cd-sidebar-backdrop" onclick={() => mobileSidebarOpen = false}></div>
+    <div class="cd-sidebar-backdrop" role="presentation" onclick={() => mobileSidebarOpen = false}></div>
   {/if}
-  <!-- Mobile rail backdrop -->
   {#if mobileRailOpen}
-    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="cd-sidebar-backdrop" onclick={() => mobileRailOpen = false}></div>
+    <div class="cd-sidebar-backdrop" role="presentation" onclick={() => mobileRailOpen = false}></div>
   {/if}
 
   <!-- Main grid -->
@@ -252,8 +248,8 @@
   </nav>
 
   <!-- Overlays (lazy-loaded after mount) -->
-  <svelte:component this={ProjectDetail} projId={openProj} onClose={() => openProj = null} />
-  <svelte:component this={ContactModal}  open={contactOpen} onClose={() => contactOpen = false} />
-  <svelte:component this={TechPanel}     tech={activeTech} onClose={() => activeTech = null} onOpenProj={(id) => { openProj = id; activeTech = null; }} />
-  <svelte:component this={Palette}       open={paletteOpen} onClose={() => paletteOpen = false} onOpenProj={(id) => { openProj = id; paletteOpen = false; }} />
+  {#if ProjectDetail}<ProjectDetail projId={openProj} onClose={() => openProj = null} />{/if}
+  {#if ContactModal}<ContactModal   open={contactOpen} onClose={() => contactOpen = false} />{/if}
+  {#if TechPanel}<TechPanel         tech={activeTech} onClose={() => activeTech = null} onOpenProj={(id) => { openProj = id; activeTech = null; }} />{/if}
+  {#if Palette}<Palette             open={paletteOpen} onClose={() => paletteOpen = false} onOpenProj={(id) => { openProj = id; paletteOpen = false; }} />{/if}
 </div>

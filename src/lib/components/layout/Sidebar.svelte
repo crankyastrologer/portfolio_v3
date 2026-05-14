@@ -44,8 +44,7 @@
 
   <div class="cd-tree">
     <!-- Root -->
-    <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-    <div class="cd-tree-folder" onclick={() => toggle('root')}>
+    <div class="cd-tree-folder" role="button" tabindex="0" onclick={() => toggle('root')} onkeydown={(e) => e.key === 'Enter' && toggle('root')}>
       <span class="cd-arr" class:cd-arr-closed={!open.root}>▼</span> ansh.site
     </div>
 
@@ -53,40 +52,37 @@
       <div transition:slide={{ duration: 200, easing: cubicOut }}>
 
         <!-- home -->
-        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-        <div class="cd-tree-folder cd-indent" onclick={() => toggle('home')}>
+        <div class="cd-tree-folder cd-indent" role="button" tabindex="0" onclick={() => toggle('home')} onkeydown={(e) => e.key === 'Enter' && toggle('home')}>
           <span class="cd-arr" class:cd-arr-closed={!open.home}>▼</span> home
         </div>
         {#if open.home}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
-            <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-            <div class="cd-tree-file cd-indent2 is-active" onclick={() => onScrollTo('home')}>— hero.tsx</div>
-            <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-            <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('home')}>— bio.md</div>
+            <div class="cd-tree-file cd-indent2 is-active" role="button" tabindex="0" onclick={() => onScrollTo('home')} onkeydown={(e) => e.key === 'Enter' && onScrollTo('home')}>— hero.tsx</div>
+            <div class="cd-tree-file cd-indent2" role="button" tabindex="0" onclick={() => onScrollTo('home')} onkeydown={(e) => e.key === 'Enter' && onScrollTo('home')}>— bio.md</div>
           </div>
         {/if}
 
         <!-- work -->
-        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-        <div class="cd-tree-folder cd-indent" onclick={() => toggle('work')}>
+        <div class="cd-tree-folder cd-indent" role="button" tabindex="0" onclick={() => toggle('work')} onkeydown={(e) => e.key === 'Enter' && toggle('work')}>
           <span class="cd-arr" class:cd-arr-closed={!open.work}>▼</span> work
         </div>
         {#if open.work}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
             {#each VISIBLE as p}
-              <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
               <div
                 class="cd-tree-file cd-indent2"
                 class:is-active={activeProj === p.id}
+                role="button"
+                tabindex="0"
                 onclick={() => { onSelectProj(p.id); onOpenProj(p.id); }}
+                onkeydown={(e) => e.key === 'Enter' && (onSelectProj(p.id), onOpenProj(p.id))}
               >— {p.title}</div>
             {/each}
           </div>
         {/if}
 
         <!-- notes -->
-        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-        <div class="cd-tree-folder cd-indent" onclick={() => toggle('notes')}>
+        <div class="cd-tree-folder cd-indent" role="button" tabindex="0" onclick={() => toggle('notes')} onkeydown={(e) => e.key === 'Enter' && toggle('notes')}>
           <span class="cd-arr" class:cd-arr-closed={!open.notes}>▼</span> notes
         </div>
         {#if open.notes}
@@ -98,23 +94,19 @@
         {/if}
 
         <!-- experience -->
-        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-        <div class="cd-tree-folder cd-indent" onclick={() => toggle('experience')}>
+        <div class="cd-tree-folder cd-indent" role="button" tabindex="0" onclick={() => toggle('experience')} onkeydown={(e) => e.key === 'Enter' && toggle('experience')}>
           <span class="cd-arr" class:cd-arr-closed={!open.experience}>▼</span> experience
         </div>
         {#if open.experience}
           <div transition:slide={{ duration: 180, easing: cubicOut }}>
-            <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-            <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('experience')}>— Litt.log</div>
-            <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-            <div class="cd-tree-file cd-indent2" onclick={() => onScrollTo('experience')}>— iiitd.log</div>
+            <div class="cd-tree-file cd-indent2" role="button" tabindex="0" onclick={() => onScrollTo('experience')} onkeydown={(e) => e.key === 'Enter' && onScrollTo('experience')}>— Litt.log</div>
+            <div class="cd-tree-file cd-indent2" role="button" tabindex="0" onclick={() => onScrollTo('experience')} onkeydown={(e) => e.key === 'Enter' && onScrollTo('experience')}>— iiitd.log</div>
           </div>
         {/if}
 
         <!-- flat files under root -->
         <a class="cd-tree-file cd-indent" href="/resume.pdf" target="_blank" rel="noreferrer">— resume.pdf</a>
-        <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
-        <div class="cd-tree-file cd-indent" onclick={onOpenContact}>— contact.md</div>
+        <div class="cd-tree-file cd-indent" role="button" tabindex="0" onclick={onOpenContact} onkeydown={(e) => e.key === 'Enter' && onOpenContact()}>— contact.md</div>
 
       </div>
     {/if}

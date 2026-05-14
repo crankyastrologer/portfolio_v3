@@ -1,5 +1,6 @@
 <script lang="ts">
   let { data } = $props();
+  const Content = data.content;
 </script>
 
 <svelte:head>
@@ -9,4 +10,4 @@
   <meta property="og:description" content={data.metadata.excerpt} />
 </svelte:head>
 
-<svelte:component this={data.content} />
+<Content />

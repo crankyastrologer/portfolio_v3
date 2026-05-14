@@ -21,12 +21,14 @@
   </div>
   <div class="cd-projects">
     {#each VISIBLE as p, idx}
-      <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
       <div
         class="cd-proj"
         class:is-active={activeProj === p.id}
+        role="button"
+        tabindex="0"
         onmouseenter={() => onSelectProj(p.id)}
         onclick={() => onOpenProj(p.id)}
+        onkeydown={(e) => e.key === 'Enter' && onOpenProj(p.id)}
       >
         <div class="cd-proj-head">
           <span class="cd-proj-id">{String(idx + 1).padStart(2, '0')}</span>

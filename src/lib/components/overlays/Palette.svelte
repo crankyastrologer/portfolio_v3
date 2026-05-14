@@ -13,11 +13,10 @@
 
   const items = [
     ...PROJECTS.map(p => ({ kind: 'project', id: p.id, label: p.title, hint: p.blurb, href: '' })),
-    { kind: 'link', id: '', label: 'open chat.ansh.site', hint: '↗ external', href: 'https://chat.ansh.site' },
     { kind: 'link', id: '', label: 'github.com/crankyastrologer', hint: '↗ external', href: 'https://github.com/crankyastrologer' },
     { kind: 'link', id: '', label: 'linkedin/ansh-vermaai', hint: '↗ external', href: 'https://www.linkedin.com/in/ansh-vermaai/' },
     { kind: 'link', id: '', label: 'mailto:ansh0verma@gmail.com', hint: '✉ direct', href: 'mailto:ansh0verma@gmail.com' },
-    { kind: 'doc', id: '', label: 'cat resume.pdf', hint: 'download cv', href: '' },
+    { kind: 'doc', id: '', label: 'cat resume.pdf', hint: 'download cv', href: 'https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv' },
     { kind: 'doc', id: '', label: 'cat about.md', hint: 'long-form bio', href: '' },
   ];
 
@@ -39,7 +38,7 @@
 
   function activate(it: typeof items[0]) {
     if (it.kind === 'project') onOpenProj(it.id);
-    else if (it.kind === 'link' && it.href) window.open(it.href, '_blank');
+    else if (it.href) window.open(it.href, '_blank');
     onClose();
   }
 

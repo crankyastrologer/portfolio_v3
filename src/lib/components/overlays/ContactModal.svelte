@@ -162,9 +162,6 @@
             <a href="https://www.linkedin.com/in/ansh-vermaai/" target="_blank" rel="noreferrer" class="cd-contact-link">
               <span class="cd-dim">li  </span> linkedin/ansh-vermaai
             </a>
-            <a href="https://chat.ansh.site" target="_blank" rel="noreferrer" class="cd-contact-link">
-              <span class="cd-dim">chat</span> chat.ansh.site
-            </a>
           </div>
         {/if}
       </div>

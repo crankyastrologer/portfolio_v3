@@ -29,7 +29,6 @@
       'drwxr-xr-x  ansh  staff   experience/  # Litt, iiitd',
       '-rw-r--r--  ansh  staff   resume.pdf',
       '-rw-r--r--  ansh  staff   contact.md',
-      '-rw-r--r--  ansh  staff   chat.link    # → chat.ansh.site',
     ],
     'cat about': () => [
       'i build agents that watch other agents work, and the kernels that make them fast.',
@@ -66,7 +65,7 @@
       '  nptel · modern c++ (silver, top 2%)',
     ],
       'cd home': () => {goto('/'); return ['→ launching ansh.site …'];},
-    'open chat': () => { window.open('https://chat.ansh.site', '_blank'); return ['→ launching chat.ansh.site …']; },
+    'open resume': () => { window.open('https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv', '_blank'); return ['→ opening resume.pdf …']; },
     'open github': () => { window.open('https://github.com/crankyastrologer', '_blank'); return ['→ github.com/crankyastrologer']; },
     'open linkedin': () => { window.open('https://www.linkedin.com/in/ansh-vermaai/', '_blank'); return ['→ linkedin.com/in/ansh-vermaai']; },
     'mail': () => { window.open('mailto:ansh0verma@gmail.com'); return ['→ ansh0verma@gmail.com']; },
@@ -76,8 +75,8 @@
       '  ls                list everything',
       '  cat about         the long version',
       '  cat resume        experience, projects, stack',
-      'cd home           takes you to main page',
-      '  open chat         → chat.ansh.site',
+      '  cd home           takes you to main page',
+      '  open resume       → resume.pdf',
       '  open github       → github',
       '  open linkedin     → linkedin',
       '  mail              → email me',
@@ -87,7 +86,7 @@
     'clear': () => '__CLEAR__',
   };
 
-  const SUGGESTIONS = ['whoami', 'ls', 'cat about', 'cat resume', 'open chat', 'mail', 'help'];
+  const SUGGESTIONS = ['whoami', 'ls', 'cat about', 'cat resume', 'open resume', 'mail', 'help'];
 
   let history = $state<HistoryLine[]>([]);
   let input = $state('');

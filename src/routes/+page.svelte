@@ -186,7 +186,7 @@
     />
 
     <main class="cd-main">
-      <div id="section-home"><Hero /></div>
+      <div id="section-home"><Hero onContact={() => contactOpen = true} /></div>
       <div id="section-work">
         <ProjectsList
           {activeProj}

@@ -105,7 +105,7 @@
         {/if}
 
         <!-- flat files under root -->
-        <a class="cd-tree-file cd-indent" href="/resume.pdf" target="_blank" rel="noreferrer">— resume.pdf</a>
+        <a class="cd-tree-file cd-indent" href="https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv" target="_blank" rel="noreferrer">— resume.pdf</a>
         <div class="cd-tree-file cd-indent" role="button" tabindex="0" onclick={onOpenContact} onkeydown={(e) => e.key === 'Enter' && onOpenContact()}>— contact.md</div>
 
       </div>
@@ -134,7 +134,6 @@
   <div class="cd-links">
     <a href="https://github.com/crankyastrologer" target="_blank" rel="noreferrer">→ github.com/crankyastrologer</a>
     <a href="https://www.linkedin.com/in/ansh-vermaai/" target="_blank" rel="noreferrer">→ linkedin/ansh-vermaai</a>
-    <a href="https://chat.ansh.site" target="_blank" rel="noreferrer">→ chat.ansh.site</a>
     <a href="mailto:ansh0verma@gmail.com">→ ansh0verma@gmail.com</a>
   </div>
 </aside>

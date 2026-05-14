@@ -1,5 +1,6 @@
 <script lang="ts">
   import Pulse from '../base/Pulse.svelte';
+  let { onContact }: { onContact: () => void } = $props();
 </script>
 
 <section class="cd-hero">
@@ -21,8 +22,7 @@
     forensics. previously: gpt-2 from scratch in c++/cuda.
   </p>
   <div class="cd-cta-row">
-    <a class="cd-cta cd-cta-primary" href="/resume.pdf">cat resume.pdf<span class="cd-arr">→</span></a>
-    <a class="cd-cta" href="mailto:ansh0verma@gmail.com">./contact</a>
-    <a class="cd-cta" href="https://chat.ansh.site" target="_blank" rel="noreferrer">open chat.ansh.site<span class="cd-arr">↗</span></a>
+    <a class="cd-cta cd-cta-primary" href="https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv" target="_blank" rel="noreferrer">cat resume.pdf<span class="cd-arr">→</span></a>
+    <button class="cd-cta" onclick={onContact}>./contact</button>
   </div>
 </section>

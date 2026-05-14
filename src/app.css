@@ -29,7 +29,6 @@ body {
   font-family: var(--mono);
   font-size: var(--cd-fz);
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -1052,16 +1051,37 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .cd-mobile-nav button.is-active { color: var(--cd-accent); }
 .cd-mobile-nav button:hover { color: var(--fg); }
 
-/* ===== TABLET: 768–1099px — sidebar + main, no rail ===== */
+/* ===== TABLET: 768–1099px — sidebar + main, rail as right drawer ===== */
 @media (min-width: 768px) and (max-width: 1099px) {
   .cd-grid { grid-template-columns: 220px 1fr; }
-  .cd-rail { display: none; }
   .cd-rail-hidden .cd-grid { grid-template-columns: 220px 1fr; }
+
+  /* Rail becomes a right-side drawer, same pattern as mobile */
+  .cd-rail {
+    position: fixed;
+    right: 0; top: 0; bottom: 0; z-index: 80;
+    width: min(360px, 92vw);
+    transform: translateX(100%);
+    transition: transform 0.26s cubic-bezier(0.2, 0.7, 0.3, 1);
+    box-shadow: -4px 0 24px rgba(0,0,0,0.45);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .cd-rail.is-open { transform: translateX(0); }
+
+  /* Show the ⌥ toggle button in the titlebar */
+  .cd-rail-toggle { display: flex; }
+
+  /* Backdrop is already conditionally rendered in the template */
+  .cd-sidebar-backdrop { display: block; }
 }
 
 /* ===== NOTE READING PAGE ===== */
 .note-shell {
   min-height: 100dvh;
+  height: auto;
+  overflow-y: auto;
   background: var(--bg);
   color: var(--fg-1);
   font-family: 'JetBrains Mono', monospace;
@@ -1173,10 +1193,51 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .note-footer {
   width: 100%;
   max-width: 740px;
-  padding: 20px 24px;
-  border-top: 1px solid var(--line);
+  padding: 32px 24px 60px;
   font-size: 12px;
 }
+.note-byline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--fg-2);
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+.note-reply {
+  display: inline-block;
+  color: var(--cd-accent);
+  text-decoration: none;
+  font-size: 12px;
+  margin-bottom: 36px;
+}
+.note-reply:hover { text-decoration: underline; }
+.note-more-head {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--fg-3);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.note-more {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+.note-more-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--fg-1);
+  transition: background 0.12s;
+}
+.note-more-item:hover { background: var(--bg-2); }
+.note-more-title { font-size: 12px; }
 
 @media (max-width: 600px) {
   .note-article { padding: 32px 16px 60px; }

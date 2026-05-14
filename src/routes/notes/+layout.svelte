@@ -1,8 +1,11 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { NOTES } from '$lib/data';
   let { children } = $props();
 
-  let meta = $derived((page.data as any)?.metadata as Record<string, string> | undefined);
+  let meta    = $derived((page.data as any)?.metadata as Record<string, string> | undefined);
+  let slug    = $derived((page.data as any)?.slug as string | undefined);
+  let others  = $derived(NOTES.filter(n => n.slug !== slug).slice(0, 3));
 </script>
 
 <div class="note-shell">
@@ -35,6 +38,29 @@
   </article>
 
   <footer class="note-footer">
-    <a href="/" class="note-back">← back to portfolio</a>
+    <hr class="note-rule" />
+
+    <div class="note-byline">
+      <span>ansh verma</span>
+      {#if meta?.date}<span class="note-dim">· {meta.date}</span>{/if}
+    </div>
+
+    <a class="note-reply" href="mailto:ansh0verma@gmail.com?subject=re: {meta?.title ?? 'your note'}">
+      thoughts? reply via email →
+    </a>
+
+    {#if others.length}
+      <div class="note-more-head">more notes</div>
+      <div class="note-more">
+        {#each others as n}
+          <a class="note-more-item" href="/notes/{n.slug}" data-sveltekit-preload-data="hover">
+            <span class="note-tag">{n.tag}</span>
+            <span class="note-more-title">{n.title}</span>
+          </a>
+        {/each}
+      </div>
+    {/if}
+
+    <a href="/" class="note-back" style="margin-top: 32px; display: inline-block;">← ansh.site</a>
   </footer>
 </div>

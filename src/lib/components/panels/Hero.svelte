@@ -8,18 +8,19 @@
     <span class="cd-hero-tag">// ansh-verma.about()</span>
     <span class="cd-hero-status">
       <Pulse />
-      shipping @ Litt
+      shipping @ LivePerson
     </span>
   </div>
   <h1 class="cd-h1">
-    i build <span class="cd-accent">agents</span> that watch other<br />
-    agents work, and the <span class="cd-accent">kernels</span><br />
-    that make them fast.
+    i build <span class="cd-accent">inference</span> servers and<br />
+    <span class="cd-accent">evals</span> that judge agent traces —<br />
+    down to the <span class="cd-accent">cuda kernels</span>.
   </h1>
   <p class="cd-sub">
-    ai/ml engineer · b.tech cs (ai/ml) · northcap '25 · 9.0 cgpa.
-    currently architecting judge-as-a-service for multi-agent llm trace
-    forensics. previously: gpt-2 from scratch in c++/cuda.
+    ml engineer · b.tech cs (ai/ml) · northcap '25 · 9.0 cgpa.
+    currently building prompt studio at LivePerson and an inference server
+    with paged kv + continuous batching. previously: judge-as-a-service at
+    Litt; gpt-2 from scratch in c++/cuda.
   </p>
   <div class="cd-cta-row">
     <a class="cd-cta cd-cta-primary" href="https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv" target="_blank" rel="noreferrer">cat resume.pdf<span class="cd-arr">→</span></a>

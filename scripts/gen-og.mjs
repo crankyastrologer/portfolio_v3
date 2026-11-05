@@ -34,10 +34,10 @@ const svg = `
   <text x="88" y="280" class="mono" font-size="72" font-weight="700" fill="#c0caf5">Ansh Verma</text>
 
   <!-- Title -->
-  <text x="88" y="348" class="mono" font-size="32" fill="#7CE38B">AI/ML Engineer</text>
+  <text x="88" y="348" class="mono" font-size="32" fill="#7CE38B">ML Engineer</text>
 
   <!-- Tagline -->
-  <text x="88" y="408" class="mono" font-size="19" fill="#565f89">eval frameworks · CUDA kernels · agentic systems</text>
+  <text x="88" y="408" class="mono" font-size="19" fill="#565f89">inference infrastructure · evals · CUDA kernels</text>
 
   <!-- URL pill -->
   <rect x="86" y="468" width="240" height="44" rx="6" fill="#1f2335" stroke="#7CE38B" stroke-width="1.5" stroke-opacity="0.5"/>

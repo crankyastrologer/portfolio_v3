@@ -127,11 +127,12 @@
   let hoveredExp = $state<string | null>(null);
 
   const STACK = [
-    { label: 'ml',   color: 'var(--blue)',      clickable: true,  items: ['pytorch', 'cuda', 'directml', 'langchain', 'qdrant', 'sklearn'] },
-    { label: 'web',  color: 'var(--cyan)',        clickable: true,  items: ['svelte', 'next', 'hono', 'fastapi', 'flask', 'graphql'] },
-    { label: 'db',   color: 'var(--amber)',      clickable: true,  items: ['mongo', 'redis', 'postgres'] },
-    { label: 'lang', color: 'var(--red)',        clickable: true,  items: ['python', 'rust', 'c/c++', 'typescript', 'java'] },
-    { label: 'cert', color: 'var(--fg-3)',       clickable: false, items: ['aws', 'nptel c++', 'nptel bizan'] },
+    { label: 'ml',    color: 'var(--blue)',   clickable: true,  items: ['pytorch', 'cuda', 'langchain', 'qdrant', 'sklearn', 'gliner', 'presidio'] },
+    { label: 'infra', color: 'var(--cyan)',   clickable: true,  items: ['vllm', 'tgi', 'docker', 'kubernetes', 'istio', 'grafana'] },
+    { label: 'web',   color: 'var(--cyan)',   clickable: true,  items: ['next', 'fastapi', 'flask', 'express', 'hono', 'svelte'] },
+    { label: 'db',    color: 'var(--amber)',  clickable: true,  items: ['mongo', 'redis', 'postgres'] },
+    { label: 'lang',  color: 'var(--red)',    clickable: true,  items: ['python', 'c/c++', 'java', 'typescript', 'rust'] },
+    { label: 'cert',  color: 'var(--fg-3)',   clickable: false, items: ['aws', 'nptel c++', 'nptel bizan'] },
   ];
 </script>
 

@@ -20,53 +20,62 @@
   const FS: Record<string, FSFn> = {
     'whoami': () => [
       'ansh verma',
-      'ai/ml engineer · Litt',
-      'b.tech cs · northcap university · 9.0 cgpa · 2021–2025',
-      'delhi, india · ' + new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }) + ' IST',
+      'ml engineer · LivePerson',
+      'b.tech cs (ai/ml) · northcap university · 9.0 cgpa · 2021–2025',
+      'gurugram, india · ' + new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Kolkata' }) + ' IST',
     ],
     'ls': () => [
-      'drwx------  ansh  staff   work/        # eval-agent, dineleap, gpt-2-cuda',
-      'drwxr-xr-x  ansh  staff   experience/  # Litt, iiitd',
+      'drwx------  ansh  staff   work/        # llm-inference, jevad, prompt-studio, eval-agent, gpt-2-cuda',
+      'drwxr-xr-x  ansh  staff   experience/  # LivePerson, Litt, Dineleap, iiitd',
       '-rw-r--r--  ansh  staff   resume.pdf',
       '-rw-r--r--  ansh  staff   contact.md',
     ],
     'cat about': () => [
-      'i build agents that watch other agents work, and the kernels that make them fast.',
+      'ml engineer building production llm systems across agentic workflows,',
+      'evaluation, and inference infrastructure.',
       '',
-      'currently @ Litt, where i architect "judge-as-a-service" frameworks for',
-      'auditing multi-agent llm traces — sub-second retrieval over a dual-storage',
-      'opentelemetry pipeline, plus an adversarial suite (distinguisher, proceduralist,',
-      'shepardizer) that stress-tests agentic decision-making.',
+      'currently @ LivePerson: built prompt studio, an llm prompt/flow migration',
+      'platform using llm-as-a-judge parity; audited production inference infra',
+      '(tgi prefill switching, idle model capacity); and migrated serving to vllm.',
       '',
-      'before that, i wrote gpt-2 from scratch in c++/cuda — coalesced memory access,',
-      'grid-stride gelu, transpose kernels for head-contiguous attention.',
+      'i also built jevad, an openai-compatible inference server for a system one',
+      'decision model, and gpt-2 from scratch in c++/cuda — fused softmax, tiled',
+      'transposes, and raw kernels all the way down.',
       '',
-      'i also ship products. dineleap is a qr-ordering system on hono + redis + mongo.',
+      'right now: a from-scratch llm inference server — paged kv, continuous',
+      'batching, recompute preemption, and a hand-written paged-attention decode',
+      'kernel, benchmarked against vllm on an rtx 4060.',
     ],
     'cat resume': () => [
       '# experience',
-      '  Litt           ai/ml engineer       jun 2025 – present',
-      '  iiit delhi            research intern      jun 2023 – aug 2023',
+      '  LivePerson     dsml 1                 aug 2026 – present',
+      '  Litt           ai/ml engineer         jun 2025 – jun 2026',
+      '  Dineleap       co-founder · full-stack  sep 2024 – dec 2024',
+      '  iiit delhi     swe intern             jun 2023 – aug 2023',
       '',
       '# projects',
-      '  eval-agent            judge-as-a-service for llm trace forensics',
+      '  llm-inference         from-scratch server · paged kv · continuous batching',
+      '  jevad                 openai-compatible inference server for jeva-4b',
+      '  prompt-studio         llm migration platform with judge parity',
       '  gpt-2-cuda            transformer kernels in raw c++/cuda',
-      '  dineleap              qr-ordering system · hono · redis · mongo',
-      '  browser-automation    vision+grounding models on government portals',
+      '  eval-agent            judge-as-a-service for llm trace forensics',
       '',
       '# stack',
-      '  ml      pytorch · langchain · qdrant · cuda · stable-baselines · scikit',
-      '  web     svelte · next · hono · fastapi · flask · express · mongo',
-      '  langs   python · c/c++ · ts · java',
+      '  ml      pytorch · cuda · langchain · qdrant · gliner · presidio',
+      '  infra   vllm · tgi · docker · kubernetes · istio · grafana',
+      '  web     next · fastapi · flask · express · hono · svelte',
+      '  langs   python · c/c++ · java · typescript',
       '',
       '# certs',
       '  aws cloud practitioner',
       '  nptel · business analytics & data mining (silver, top 5%)',
       '  nptel · modern c++ (silver, top 2%)',
     ],
-      'cd home': () => {goto('/'); return ['→ launching ansh.site …'];},
+    'cd home': () => {goto('/'); return ['→ launching ansh.site …'];},
     'open resume': () => { window.open('https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv', '_blank'); return ['→ opening resume.pdf …']; },
     'open github': () => { window.open('https://github.com/crankyastrologer', '_blank'); return ['→ github.com/crankyastrologer']; },
+    'open jeva': () => { window.open('https://github.com/crankyastrologer/Jeva', '_blank'); return ['→ github.com/crankyastrologer/Jeva']; },
+    'open inference': () => { window.open('https://github.com/crankyastrologer/inference_server', '_blank'); return ['→ github.com/crankyastrologer/inference_server']; },
     'open linkedin': () => { window.open('https://www.linkedin.com/in/ansh-vermaai/', '_blank'); return ['→ linkedin.com/in/ansh-vermaai']; },
     'mail': () => { window.open('mailto:ansh0verma@gmail.com'); return ['→ ansh0verma@gmail.com']; },
     'help': () => [
@@ -78,6 +87,8 @@
       '  cd home           takes you to main page',
       '  open resume       → resume.pdf',
       '  open github       → github',
+      '  open jeva         → jeva inference server',
+      '  open inference    → from-scratch llm inference server',
       '  open linkedin     → linkedin',
       '  mail              → email me',
       '  clear             clear screen',
@@ -86,7 +97,7 @@
     'clear': () => '__CLEAR__',
   };
 
-  const SUGGESTIONS = ['whoami', 'ls', 'cat about', 'cat resume', 'open resume', 'mail', 'help'];
+  const SUGGESTIONS = ['whoami', 'ls', 'cat about', 'cat resume', 'open resume', 'open jeva', 'mail', 'help'];
 
   let history = $state<HistoryLine[]>([]);
   let input = $state('');
@@ -219,7 +230,7 @@
   ███████║██╔██╗ ██║███████╗███████║
   ██╔══██║██║╚██╗██║╚════██║██╔══██║
   ██║  ██║██║ ╚████║███████║██║  ██║
-  ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   v25.06`}</pre>
+  ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   v26.11`}</pre>
       <div class="boot-banner-sub">portfolio · last build {new Date().toISOString().slice(0,10)} · sha 4f2a91c</div>
     </div>
 

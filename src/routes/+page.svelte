@@ -229,7 +229,7 @@
       </span>
     </div>
     <div class="cd-sb-right">
-      <span class="cd-dim">delhi</span>
+      <span class="cd-dim">gurugram</span>
       <span>{dateStr}</span>
       <span class="cd-dim">·</span>
       <span>{timeStr}</span>
@@ -250,6 +250,6 @@
   <!-- Overlays (lazy-loaded after mount) -->
   {#if ProjectDetail}<ProjectDetail projId={openProj} onClose={() => openProj = null} />{/if}
   {#if ContactModal}<ContactModal   open={contactOpen} onClose={() => contactOpen = false} />{/if}
-  {#if TechPanel}<TechPanel         tech={activeTech} onClose={() => activeTech = null} onOpenProj={(id) => { openProj = id; activeTech = null; }} />{/if}
-  {#if Palette}<Palette             open={paletteOpen} onClose={() => paletteOpen = false} onOpenProj={(id) => { openProj = id; paletteOpen = false; }} />{/if}
+  {#if TechPanel}<TechPanel         tech={activeTech} onClose={() => activeTech = null} onOpenProj={(id: string) => { openProj = id; activeTech = null; }} />{/if}
+  {#if Palette}<Palette             open={paletteOpen} onClose={() => paletteOpen = false} onOpenProj={(id: string) => { openProj = id; paletteOpen = false; }} />{/if}
 </div>

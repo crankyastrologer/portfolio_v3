@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import {goto} from "$app/navigation";
+  import { goto } from '$app/navigation';
+  import { LINKS } from '$lib/data';
 
   interface HistoryLine {
     kind: 'boot' | 'cmd' | 'out';
@@ -72,12 +73,12 @@
       '  nptel · modern c++ (silver, top 2%)',
     ],
     'cd home': () => {goto('/'); return ['→ launching ansh.site …'];},
-    'open resume': () => { window.open('https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv', '_blank'); return ['→ opening resume.pdf …']; },
-    'open github': () => { window.open('https://github.com/crankyastrologer', '_blank'); return ['→ github.com/crankyastrologer']; },
-    'open jeva': () => { window.open('https://github.com/crankyastrologer/Jeva', '_blank'); return ['→ github.com/crankyastrologer/Jeva']; },
-    'open inference': () => { window.open('https://github.com/crankyastrologer/inference_server', '_blank'); return ['→ github.com/crankyastrologer/inference_server']; },
-    'open linkedin': () => { window.open('https://www.linkedin.com/in/ansh-vermaai/', '_blank'); return ['→ linkedin.com/in/ansh-vermaai']; },
-    'mail': () => { window.open('mailto:ansh0verma@gmail.com'); return ['→ ansh0verma@gmail.com']; },
+    'open resume': () => { window.open(LINKS.resume, '_blank'); return ['→ opening resume.pdf …']; },
+    'open github': () => { window.open(LINKS.github, '_blank'); return ['→ github.com/crankyastrologer']; },
+    'open jeva': () => { window.open(LINKS.jeva, '_blank'); return ['→ github.com/crankyastrologer/Jeva']; },
+    'open inference': () => { window.open(LINKS.inference, '_blank'); return ['→ github.com/crankyastrologer/inference_server']; },
+    'open linkedin': () => { window.open(LINKS.linkedin, '_blank'); return ['→ linkedin.com/in/ansh-vermaai']; },
+    'mail': () => { window.open(`mailto:${LINKS.email}`); return ['→ ansh0verma@gmail.com']; },
     'help': () => [
       'commands:',
       '  whoami            who am i',

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/state';
-  import { NOTES } from '$lib/data';
+  import { NOTES, LINKS } from '$lib/data';
   let { children } = $props();
 
   let meta    = $derived((page.data as any)?.metadata as Record<string, string> | undefined);
@@ -45,7 +45,7 @@
       {#if meta?.date}<span class="note-dim">· {meta.date}</span>{/if}
     </div>
 
-    <a class="note-reply" href="mailto:ansh0verma@gmail.com?subject=re: {meta?.title ?? 'your note'}">
+    <a class="note-reply" href="mailto:{LINKS.email}?subject=re: {meta?.title ?? 'your note'}">
       thoughts? reply via email →
     </a>
 

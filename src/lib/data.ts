@@ -48,6 +48,17 @@ export interface CurrentlyItem {
   link?: string;
 }
 
+// Single source of truth for external links — update here, not in components.
+export const LINKS = {
+  site:     'https://ansh.site',
+  email:    'ansh0verma@gmail.com',
+  resume:   'https://drive.google.com/file/d/1OB3zlnOW6wqRZhWNKx3buR2sbYaEM1Zd/view',
+  github:   'https://github.com/crankyastrologer',
+  linkedin: 'https://www.linkedin.com/in/ansh-vermaai/',
+  jeva:     'https://github.com/crankyastrologer/Jeva',
+  inference:'https://github.com/crankyastrologer/inference_server',
+} as const;
+
 export const PROJECTS: Project[] = [
   {
     id: 'llm-inference',
@@ -82,7 +93,7 @@ export const PROJECTS: Project[] = [
       { label: 'decode kernel', value: 'hand-written', delta: 'gqa · online softmax' },
     ],
     spark: [2,3,3,4,5,5,6,6,7,8,8,9,9,10,10,11,11,11,12,12],
-    href: 'https://github.com/crankyastrologer/inference_server',
+    href: LINKS.inference,
     status: 'shipping',
   },
   {
@@ -119,7 +130,7 @@ export const PROJECTS: Project[] = [
       { label: 'exact repeats', value: '262→10ms', delta: 'cached' },
     ],
     spark: [4,5,5,6,7,7,8,8,9,9,10,10,10,11,11,11,11,12,12,12],
-    href: 'https://github.com/crankyastrologer/Jeva',
+    href: LINKS.jeva,
     status: 'live',
   },
   {

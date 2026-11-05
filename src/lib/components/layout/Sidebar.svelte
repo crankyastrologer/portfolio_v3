@@ -1,7 +1,7 @@
 <script lang="ts">
   import { slide } from 'svelte/transition';
   import { cubicOut } from 'svelte/easing';
-  import { PROJECTS, NOTES, CURRENTLY } from '$lib/data';
+  import { PROJECTS, NOTES, CURRENTLY, LINKS } from '$lib/data';
   const VISIBLE = PROJECTS.filter(p => !p.hidden);
 
   let {
@@ -105,7 +105,7 @@
         {/if}
 
         <!-- flat files under root -->
-        <a class="cd-tree-file cd-indent" href="https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv" target="_blank" rel="noreferrer">— resume.pdf</a>
+        <a class="cd-tree-file cd-indent" href={LINKS.resume} target="_blank" rel="noreferrer">— resume.pdf</a>
         <div class="cd-tree-file cd-indent" role="button" tabindex="0" onclick={onOpenContact} onkeydown={(e) => e.key === 'Enter' && onOpenContact()}>— contact.md</div>
 
       </div>
@@ -132,8 +132,8 @@
 
   <div class="cd-side-head cd-side-head-2">LINKS</div>
   <div class="cd-links">
-    <a href="https://github.com/crankyastrologer" target="_blank" rel="noreferrer">→ github.com/crankyastrologer</a>
-    <a href="https://www.linkedin.com/in/ansh-vermaai/" target="_blank" rel="noreferrer">→ linkedin/ansh-vermaai</a>
-    <a href="mailto:ansh0verma@gmail.com">→ ansh0verma@gmail.com</a>
+    <a href={LINKS.github} target="_blank" rel="noreferrer">→ github.com/crankyastrologer</a>
+    <a href={LINKS.linkedin} target="_blank" rel="noreferrer">→ linkedin/ansh-vermaai</a>
+    <a href="mailto:{LINKS.email}">→ ansh0verma@gmail.com</a>
   </div>
 </aside>

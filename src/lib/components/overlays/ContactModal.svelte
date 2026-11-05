@@ -1,5 +1,6 @@
 <script lang="ts">
   import { PUBLIC_WEB3FORMS_KEY } from '$env/static/public';
+  import { LINKS } from '$lib/data';
 
   let { open, onClose }: { open: boolean; onClose: () => void } = $props();
 
@@ -153,13 +154,13 @@
 
           <div class="cd-detail-section-h">// reach me at</div>
           <div class="cd-contact-links">
-            <a href="mailto:ansh0verma@gmail.com" class="cd-contact-link">
+            <a href="mailto:{LINKS.email}" class="cd-contact-link">
               <span class="cd-dim">mail</span> ansh0verma@gmail.com
             </a>
-            <a href="https://github.com/crankyastrologer" target="_blank" rel="noreferrer" class="cd-contact-link">
+            <a href={LINKS.github} target="_blank" rel="noreferrer" class="cd-contact-link">
               <span class="cd-dim">gh  </span> github.com/crankyastrologer
             </a>
-            <a href="https://www.linkedin.com/in/ansh-vermaai/" target="_blank" rel="noreferrer" class="cd-contact-link">
+            <a href={LINKS.linkedin} target="_blank" rel="noreferrer" class="cd-contact-link">
               <span class="cd-dim">li  </span> linkedin/ansh-vermaai
             </a>
           </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PROJECTS } from '$lib/data';
+  import { PROJECTS, LINKS } from '$lib/data';
 
   let {
     open,
@@ -13,10 +13,10 @@
 
   const items = [
     ...PROJECTS.map(p => ({ kind: 'project', id: p.id, label: p.title, hint: p.blurb, href: '' })),
-    { kind: 'link', id: '', label: 'github.com/crankyastrologer', hint: '↗ external', href: 'https://github.com/crankyastrologer' },
-    { kind: 'link', id: '', label: 'linkedin/ansh-vermaai', hint: '↗ external', href: 'https://www.linkedin.com/in/ansh-vermaai/' },
-    { kind: 'link', id: '', label: 'mailto:ansh0verma@gmail.com', hint: '✉ direct', href: 'mailto:ansh0verma@gmail.com' },
-    { kind: 'doc', id: '', label: 'cat resume.pdf', hint: 'download cv', href: 'https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv' },
+    { kind: 'link', id: '', label: 'github.com/crankyastrologer', hint: '↗ external', href: LINKS.github },
+    { kind: 'link', id: '', label: 'linkedin/ansh-vermaai', hint: '↗ external', href: LINKS.linkedin },
+    { kind: 'link', id: '', label: 'mailto:ansh0verma@gmail.com', hint: '✉ direct', href: `mailto:${LINKS.email}` },
+    { kind: 'doc', id: '', label: 'cat resume.pdf', hint: 'download cv', href: LINKS.resume },
     { kind: 'doc', id: '', label: 'cat about.md', hint: 'long-form bio', href: '' },
   ];
 

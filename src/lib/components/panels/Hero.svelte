@@ -1,5 +1,6 @@
 <script lang="ts">
   import Pulse from '../base/Pulse.svelte';
+  import { LINKS } from '$lib/data';
   let { onContact }: { onContact: () => void } = $props();
 </script>
 
@@ -23,7 +24,7 @@
     Litt; gpt-2 from scratch in c++/cuda.
   </p>
   <div class="cd-cta-row">
-    <a class="cd-cta cd-cta-primary" href="https://kmvtiv3h5z.ufs.sh/f/z6mi9BYbVtivC6XusspEq0Z9kAeuYCpfLMXyPxIURKiOT2Vv" target="_blank" rel="noreferrer">cat resume.pdf<span class="cd-arr">→</span></a>
+    <a class="cd-cta cd-cta-primary" href={LINKS.resume} target="_blank" rel="noreferrer">cat resume.pdf<span class="cd-arr">→</span></a>
     <button class="cd-cta" onclick={onContact}>./contact</button>
   </div>
 </section>

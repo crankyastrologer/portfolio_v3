@@ -1,7 +1,9 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { NOTES, LINKS } from '$lib/data';
+  import ContactModal from '$lib/components/overlays/ContactModal.svelte';
   let { children } = $props();
+  let contactOpen = $state(false);
 
   let meta    = $derived((page.data as any)?.metadata as Record<string, string> | undefined);
   let slug    = $derived((page.data as any)?.slug as string | undefined);
@@ -45,9 +47,12 @@
       {#if meta?.date}<span class="note-dim">· {meta.date}</span>{/if}
     </div>
 
-    <a class="note-reply" href="mailto:{LINKS.email}?subject=re: {meta?.title ?? 'your note'}">
-      thoughts? reply via email →
-    </a>
+    <button class="note-reply note-reply-btn" onclick={() => contactOpen = true}>
+      thoughts? send a note →
+    </button>
+    <p class="note-contact-alt">
+      or email <a href="mailto:{LINKS.email}">{LINKS.email}</a>
+    </p>
 
     {#if others.length}
       <div class="note-more-head">more notes</div>
@@ -64,3 +69,5 @@
     <a href="/" class="note-back" style="margin-top: 32px; display: inline-block;">← ansh.site</a>
   </footer>
 </div>
+
+<ContactModal open={contactOpen} onClose={() => contactOpen = false} />

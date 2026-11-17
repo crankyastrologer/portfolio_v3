@@ -1190,6 +1190,41 @@ button { font: inherit; color: inherit; cursor: pointer; }
   padding: 8px 16px;
   color: var(--fg-2);
 }
+.note-body table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 1.6em;
+  font-size: 11.5px;
+}
+.note-body th, .note-body td {
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  text-align: left;
+  white-space: nowrap;
+}
+.note-body th {
+  background: var(--bg-2);
+  color: var(--fg);
+  font-weight: 600;
+}
+.note-body tbody tr:hover { background: var(--bg-1); }
+.note-body figure { margin: 1.8em 0; }
+.note-body figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-1);
+}
+.note-body figcaption {
+  font-size: 11px;
+  color: var(--fg-3);
+  line-height: 1.6;
+  margin-top: 8px;
+}
 
 .note-footer {
   width: 100%;
@@ -1210,9 +1245,23 @@ button { font: inherit; color: inherit; cursor: pointer; }
   color: var(--cd-accent);
   text-decoration: none;
   font-size: 12px;
-  margin-bottom: 36px;
+  margin-bottom: 8px;
 }
 .note-reply:hover { text-decoration: underline; }
+.note-reply-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+.note-contact-alt {
+  font-size: 11px;
+  color: var(--fg-3);
+  margin: 0 0 36px;
+}
+.note-contact-alt a { color: var(--fg-2); }
+.note-contact-alt a:hover { color: var(--cd-accent); }
 .note-more-head {
   font-size: 10px;
   letter-spacing: 0.08em;
